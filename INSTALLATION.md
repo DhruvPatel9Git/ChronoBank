@@ -1,66 +1,90 @@
-⏱️ Installation Guide for ChronoBank System
+# ⏱️ Installation Guide for ChronoBank System
 
 ChronoBank is a time-based banking system built with Flask. This guide will walk you through setting up the project locally.
 
-📋 Prerequisites
+---
+
+## 📋 Prerequisites
 
 Make sure the following are installed:
 
-Python 3.9+
+* **Python 3.9+**
+* **MySQL Server** (e.g., XAMPP, WAMP, MAMP, or standalone MySQL)
+* **Git**
 
-MySQL Server (e.g., XAMPP, WAMP, MAMP, or standalone MySQL)
+---
 
-Git
+## 🧽 Steps to Install and Run
 
-🧽 Steps to Install and Run
+### 1. **Clone the Repository**
 
-1. Clone the Repository
-
+```bash
 git clone https://github.com/your-username/chronobank-system.git
 cd chronobank-system
+```
 
-Replace your-username with your actual GitHub username.
+> Replace `your-username` with your actual GitHub username.
 
-2. Create and Activate Virtual Environment
+---
+
+### 2. **Create and Activate Virtual Environment**
 
 Create a virtual environment to isolate dependencies.
 
+```bash
 python -m venv env
+```
 
 Activate it:
 
-Windows:
+* **Windows**:
 
-env\Scripts\activate
+  ```bash
+  env\Scripts\activate
+  ```
+* **macOS/Linux**:
 
-macOS/Linux:
+  ```bash
+  source env/bin/activate
+  ```
 
-source env/bin/activate
+---
 
-3. Install Dependencies
+### 3. **Install Dependencies**
 
 Install all required Python packages:
 
+```bash
 pip install -r requirements.txt
+```
 
-4. Database Setup
+---
 
-A. Start MySQL server via your preferred environment (e.g., XAMPP)
+### 4. **Database Setup**
 
-B. Create the database:
+#### A. Start MySQL server via your preferred environment (e.g., XAMPP)
 
+#### B. Create the database:
+
+```sql
 CREATE DATABASE chronobank_db;
+```
 
-C. Import the schema (if provided):
+#### C. Import the schema (if provided):
 
+```bash
 mysql -u root -p chronobank_db < schema.sql
+```
 
-Modify the database name or credentials if necessary.
+> Modify the database name or credentials if necessary.
 
-5. Configure Environment Variables
+---
 
-Create a .env file in the root of the project and add the following:
+### 5. **Configure Environment Variables**
 
+Create a `.env` file in the root of the project and add the following:
+
+```env
 FLASK_APP=app.py
 FLASK_ENV=development
 
@@ -71,41 +95,52 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_mysql_password
 DB_NAME=chronobank_db
+```
 
-Update the values to match your system setup.
+> Update the values to match your system setup.
 
-6. Run the Application
+---
+
+### 6. **Run the Application**
 
 Start the Flask development server:
 
+```bash
 python app.py
+```
 
 You should see output like:
 
+```
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+```
 
-7. Access the Application
+---
 
-User Site: http://localhost:5000
+### 7. **Access the Application**
 
-Admin Panel: http://localhost:5000/adminPanel
+* **User Site**: [http://localhost:5000](http://localhost:5000)
+* **Admin Panel**: [http://localhost:5000/adminPanel](http://localhost:5000/adminPanel)
 
-8. Initial Login Credentials
+---
 
-👤 User Login:
+### 8. **Initial Login Credentials**
 
-Username: user
+#### 👤 User Login:
 
-Password: @user@
+* **Username:** `user`
+* **Password:** `@user@`
 
-🛠️ Admin Login:
+#### 🛠️ Admin Login:
 
-Username: admin
+* **Username:** `admin`
+* **Password:** `admin`
 
-Password: admin
+---
 
-⚙️ Project Structure Overview
+## ⚙️ Project Structure Overview
 
+```
 chronobank-system/
 │
 ├— app.py
@@ -121,26 +156,34 @@ chronobank-system/
 ├— utils/
 ├— decorators/
 └— INSTALLATION.md
+```
 
-🤝 Contributing
+---
 
-Fork the repository.
+## 🤝 Contributing
 
-Create a new branch:
+1. Fork the repository.
+2. Create a new branch:
 
-git checkout -b feature/your-feature-name
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Make your changes and commit:
 
-Make your changes and commit:
+   ```bash
+   git commit -am "Add your feature"
+   ```
+4. Push to your branch:
 
-git commit -am "Add your feature"
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a Pull Request.
 
-Push to your branch:
+---
 
-git push origin feature/your-feature-name
+## 📄 License
 
-Open a Pull Request.
+This project is licensed under the [MIT License](LICENSE).
 
-📄 License
-
-This project is licensed under the MIT License.
-
+---
