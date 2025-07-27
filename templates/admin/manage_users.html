@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Manage Users{% endblock %}
+{% block content %}
+<div class="top-right">
+    <a href="{{ url_for('admin_home.index') }}" class="button">🏠 Home</a>
+</div>
+<h2>Manage Users</h2>
+
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Total Balance (Minutes)</th>  <!-- Updated column name -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.total_balance_minutes }}</td>  <!-- Updated to show minutes -->
+            <td>
+                <a href="{{ url_for('admin_bp.edit_user', user_id=user.id) }}" class="button small">Edit</a>
+                <a href="{{ url_for('admin_bp.delete_user', user_id=user.id) }}" class="button small delete" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .user-table th, .user-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .user-table th {
+        background-color: #2d6a4f;
+        color: white;
+    }
+
+    .user-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .user-table tr:hover {
+        background-color: #d4f3e2;
+    }
+</style>
+
+{% endblock %}

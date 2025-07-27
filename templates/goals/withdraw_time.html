@@ -1,0 +1,19 @@
+<!-- templates/withdraw_time.html -->
+{% extends "goal_base.html" %}
+{% block content %}
+<h2>Withdraw Time from Goal</h2>
+<form method="POST" action="{{ url_for('goal_bp.withdraw_goal_hours') }}">
+  <label>Select Goal</label>
+  <select name="goal_id" required>
+    {% for goal in goals %}
+      <option value="{{ goal.id }}">{{ goal.title }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Time to Withdraw (HH:MM)</label>
+  <input type="text" name="hours" placeholder="HH:MM" required>
+
+
+  <button type="submit">Withdraw</button>
+</form>
+{% endblock %}

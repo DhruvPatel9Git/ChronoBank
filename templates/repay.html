@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repay Loan - ChronoBank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='loan.css') }}">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow" style="width: 24rem;">
+        <h4 class="card-title mb-3 text-center">Repay Loan</h4>
+
+        <!-- Flash messages display -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                    <a href="{{ url_for('loan.dashboard') }}" class="btn btn-primary w-100">← Go to Loan Dashboard</a>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if loan %}
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Loan Amount</label>
+                <input type="text" class="form-control" value="{{ loan.loan_amount }} hours" disabled>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Repayment Strategy</label>
+                <input type="text" class="form-control" value="{{ strategy_type }}" disabled>
+            </div>
+
+            {% if strategy_type.lower() == 'fixed' %}
+                <p class="text-muted small">You will repay the full amount in one transaction.</p>
+                <button type="submit" class="btn btn-success w-100" name="repayment_type" value="full">Repay Full Loan</button>
+            {% elif strategy_type.lower() == 'installment' %}
+                <p class="text-muted small">You will repay the next installment.</p>
+                <button type="submit" class="btn btn-primary w-100" name="repayment_type" value="installment">Repay Installment</button>
+            {% endif %}
+        </form>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

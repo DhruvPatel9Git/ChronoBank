@@ -1,0 +1,348 @@
+/* Body and Background */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: 
+        linear-gradient(135deg, rgba(200, 230, 201, 0.5), rgba(129, 199, 132, 0.5)),
+        url("time.jpg") center/cover no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    animation: gradientBG 10s ease infinite;
+    color: #1b5e20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+/* Form layout fixes */
+/* Ensure form fields are stacked */
+.field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0.8rem; /* Reduced from 1.2rem */
+    width: 100%;
+  }
+  h2, h3, .typing-title {
+    color: #ffffff; /* white text for high contrast */
+    text-shadow: 3px 3px 6px rgba(240, 233, 233, 0.8); /* strong dark shadow for readability */
+    font-weight: bold;
+}
+
+  .form-box {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    padding: 1.5rem 2rem; /* Reduced padding */
+    margin: 1.5rem auto;  /* Reduced margin */
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 0 8px 20px rgba(56, 142, 60, 0.2);
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem; /* Reduced margin */
+  }
+  
+  input {
+    width: 100%;
+    margin-top: 0.4rem;
+    margin-bottom: 0.3rem; /* Slightly tighter input space */
+  }
+    
+  /* Center buttons */
+  .button-group {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+    
+  /* Input styling remains */
+  input {
+    padding: 10px;
+    border: 2px solid #a5d6a7;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    outline: none;
+    width: 100%;
+  }
+  
+  /* Center buttons in row */
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Typing Title */
+.typing-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #004f00;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    animation: typing 3s steps(30, end) forwards;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px #dcedc8;
+    border-right: none; /* Remove blinking cursor */
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Headings */
+h2, h3, .typing-title {
+    color: #004d00;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+/* Container Box */
+.container, .main-box {
+    background: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 30px;
+}
+.navbar {
+    width: 100%;
+    background: rgba(18, 147, 80, 0.05);
+    padding: 15px 30px;
+    text-align: right;
+    box-shadow: 0 2px 8px rgba(93, 181, 156, 0.05);
+  }
+  
+  .navbar a {
+    color: #0c6c44;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 25px;
+    padding: 10px 18px;
+    transition: 0.3s;
+  }
+  
+  .navbar a:hover {
+    background: rgba(77, 143, 119, 0.1);
+    border-radius: 8px;
+  }
+
+
+/* Form Section */
+form, .transfer-section {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 1rem;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 10px 25px rgba(56, 142, 60, 0.2);
+}
+
+/* Labels and Inputs */
+label {
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+input {
+    padding: 10px;
+    border: 2px solid #a5d6a7;
+    border-radius: 12px;
+    margin: 8px 0 16px 0;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 220px;
+}
+
+input:focus {
+    border-color: #388e3c;
+    box-shadow: 0 0 5px rgba(56, 142, 60, 0.4);
+}
+
+/* Buttons */
+button {
+    background-color: #66bb6a;
+    color: white;
+    padding: 12px 20px;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+    min-width: 150px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+button:hover {
+    background-color: #43a047;
+    transform: scale(1.05);
+}
+
+/* Animated Arrow inside button */
+button .arrow {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: glideArrow 2s linear infinite;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    color: #a5f1c1;
+}
+
+@keyframes glideArrow {
+    0% { left: -20px; }
+    100% { left: 100%; }
+}
+
+/* Transparent Table */
+.transparent-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #1b5e20;
+}
+
+.transparent-table th,
+.transparent-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    text-align: left;
+}
+
+.transparent-table th {
+    background-color: rgba(255, 255, 255, 0.25);
+    font-weight: bold;
+}
+
+.transparent-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+/* Header */
+/* Header */
+header {
+    width: 100%;
+    padding: 20px 0;
+    background: none; /* Removed the green transparent background */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: center;
+}h1, .typing-title {
+    color: #ffffff; /* bright white for visibility */
+    font-family: 'Poppins', sans-serif; /* modern and clean font */
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* adds depth */
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.title-wrapper {
+    background-color: rgba(47, 168, 108, 0.5); /* dark overlay */
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.title-wrapper h1 { 
+    color: #e9ece5;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+
+/* Header Title Text */
+header h1, header .title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0b3d0b; /* Dark green for high contrast */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6); /* Light shadow for readability */
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Footer */
+footer {
+    width: 100%;
+    background: rgba(0, 100, 0, 0.2);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: auto;
+    color: #ffffff;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+/* Buttons aligned */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Grouping form inputs */
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+/* Consistency */
+form, .transfer-section {
+    margin-top: 2rem;
+}
+
+/* Typing cursor removed */
+.typing-title {
+    border-right: none !important;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    input, button {
+        width: 100%;
+        margin-top: 8px;
+    }
+    .container {
+        padding: 1rem;
+    }
+}

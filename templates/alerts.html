@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Alerts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .alert {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .alert-info {
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+        .alert-warning {
+            background-color: #fcf8e3;
+            border-color: #faebcc;
+        }
+        .alert-danger {
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    </style>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('alert', function(data) {
+            // Display the alert dynamically
+            var alertBox = document.createElement('div');
+            alertBox.classList.add('alert', 'alert-info');
+            alertBox.innerText = "[User " + data.user_id + "] " + data.message;
+            document.getElementById('alerts').appendChild(alertBox);
+        });
+    </script>
+</head>
+<body>
+
+<h1>Real-Time Alerts</h1>
+
+<div id="alerts">
+    <!-- Real-time alerts will appear here -->
+</div>
+
+</body>
+</html>

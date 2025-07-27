@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - ChronoBank</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="active">Home</a>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <h2>Create Your ChronoBank Account</h2>
+        <form id="accountForm">
+            <div class="input-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="Enter first name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Enter last name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="accountType">Account Type</label>
+                <select id="accountType" required>
+                    <option value="" disabled selected>Select account type</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Investment">Investment</option>
+                    <option value="Loan">Loan</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="balance">Initial Balance (HH:MM)</label>
+                <input type="text" id="balance" placeholder="e.g. 10:30" required>
+            </div>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <!-- Success Message -->
+        <div class="success-msg" id="successMessage" style="display: none;">Account Created Successfully!</div>
+        
+        <!-- Error Message -->
+        <div id="responseMessage" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('accountForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const accountType = document.getElementById('accountType').value;
+            const balanceInput = document.getElementById('balance').value.trim();
+
+            // Validate and convert HH:MM to decimal
+            const timeRegex = /^(\d{1,3}):([0-5][0-9])$/;
+            const match = balanceInput.match(timeRegex);
+            if (!match) {
+                alert("Please enter balance in valid HH:MM format (e.g. 10:45)");
+                return;
+            }
+
+            const hours = parseInt(match[1], 10);
+            const minutes = parseInt(match[2], 10);
+            const balanceDecimal = (hours + minutes / 60).toFixed(2); // Convert to decimal string
+
+            // Create full name by combining first and last name
+            const fullName = firstName + " " + lastName;
+
+            fetch('/create_account', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    full_name: fullName,  // Send full name to backend
+                    account_type: accountType,
+                    balance: balanceDecimal
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const responseMessage = document.getElementById('responseMessage');
+                const successMessage = document.getElementById('successMessage');
+
+                if (data.message && data.message.includes("successfully")) {
+                    successMessage.style.display = "block";
+                    successMessage.innerText = "✅ " + data.message + 
+                        (data.account_number ? `\nAccount Number: ${data.account_number}` : '');
+                    responseMessage.style.display = "none";
+                    successMessage.classList.add('fade-in');
+
+                    setTimeout(() => {
+                        document.getElementById('accountForm').reset();
+                    }, 1000);
+                } else {
+                    responseMessage.innerText = "❌ " + (data.message || "An error occurred.");
+                    responseMessage.style.display = "block";
+                    successMessage.style.display = "none";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('responseMessage').innerText = "❌ Server Error. Try Again!";
+                document.getElementById('responseMessage').style.display = "block";
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time Goals</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='goal.css') }}">
+</head>
+<body>
+  <div class="navbar">
+        
+    <a href="{{ url_for('index') }} "class="active">Home</a>
+</div>
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    
+    {% if session.username %}
+      <div class="welcome">Welcome, {{ session.username }}!</div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+ 
+</body>
+</html>

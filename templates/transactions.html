@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Time</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="navbar">
+        
+        <a href="{{ url_for('index') }} "class="active">Home</a>
+    </div>
+    <div class="form-container">
+        <h2>Transfer Time</h2>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if success %}
+        <p class="success">{{ success }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('transactions.record_transaction') }}" method="POST">
+            <!-- Sender Account Info -->
+            <label for="sender_account_number">Sender Account Number:</label>
+            <input type="text" id="sender_account_number" name="sender_account_number" required>
+
+            <!-- Receiver Info -->
+            <label for="receiver_username">Receiver Username:</label>
+            <input type="text" id="receiver_username" name="receiver_username" required>
+
+            <label for="receiver_account_number">Receiver Account Number:</label>
+            <input type="text" id="receiver_account_number" name="receiver_account_number" required>
+
+            <!-- Amount -->
+            <label for="amount">Amount (in HH:MM format):</label>
+            <input type="text" id="amount" name="amount" pattern="([0-9]{1,3}):([0-5][0-9])" placeholder="HH:MM" required title="Time in HH:MM format (Hours can go up to 999)">
+
+
+            <!-- Sender Account Type (Optional) -->
+            <label for="account_type">Your Account Type:</label>
+            <select id="account_type" name="account_type">
+                <option value="savings">Savings</option>
+                <option value="checking">Checking</option>
+            </select>
+
+            <button type="submit">Transfer</button>
+        </form>
+
+        
+    </div>
+
+</body>
+</html>

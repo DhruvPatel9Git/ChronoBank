@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChronoBank - Time Banking</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='banking.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar">
+    <a href="{{ url_for('index') }} "class="active">Home</a>
+</div>
+  <!-- Header -->
+  <div class="title-wrapper">
+    <h1 class="typing-title">ChronoBank - Time Banking</h1>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- User Time Management Form -->
+    <form class="form-box" onsubmit="return false;">
+      <div class="field-row">
+        <div class="field">
+          <label for="accountNumber">Account Number:</label>
+          <input type="text" id="accountNumber" placeholder="Enter Account Number">
+        </div>
+        <div class="field">
+          <label for="time">Time (HH:MM):</label>
+          <input type="text" id="time" placeholder="e.g., 01:30">
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="depositBtn">Deposit <span class="arrow">➜</span></button>
+        <button type="button" id="withdrawBtn">Withdraw <span class="arrow">➜</span></button>
+        <button type="button" id="checkBalanceBtn">Check Balance <span class="arrow">➜</span></button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 ChronoBank. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const BASE_URL = "/banking";
+
+      function parseTime(timeStr) {
+        const [hours, minutes] = timeStr.split(":").map(Number);
+        return { hours, minutes };
+      }
+
+      function showMessage(message, isError = false) {
+        const messageBox = document.createElement('div');
+        messageBox.classList.add(isError ? 'error-message' : 'success-message');
+        messageBox.textContent = message;
+        document.body.appendChild(messageBox);
+        setTimeout(() => {
+          messageBox.remove();
+        }, 3000);
+      }
+
+      document.getElementById("depositBtn")?.addEventListener("click", async function () {
+        const accountNumber = document.getElementById("accountNumber").value;
+        const time = document.getElementById("time").value;
+
+        if (!accountNumber || !time.includes(":")) {
+          const msg = "Please enter Account Number and valid Time in HH:MM format.";
+          showMessage(msg, true);
+          alert(msg);
+          return;
+        }
+
+        const { hours, minutes } = parseTime(time);
+
+        const response = await fetch(`${BASE_URL}/deposit`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ account_number: accountNumber, hours, minutes })
+        });
+
+        const result = await response.json();
+        const msg = result.message || result.error || JSON.stringify(result);
+        showMessage(msg, !!result.error);
+        alert(msg);
+      });
+
+      document.getElementById("withdrawBtn")?.addEventListener("click", async function () {
+        const accountNumber = document.getElementById("accountNumber").value;
+        const time = document.getElementById("time").value;
+
+        if (!accountNumber || !time.includes(":")) {
+          const msg = "Please enter Account Number and valid Time in HH:MM format.";
+          showMessage(msg, true);
+          alert(msg);
+          return;
+        }
+
+        const response = await fetch(`${BASE_URL}/withdraw`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ account_number: accountNumber, time })
+        });
+
+        const result = await response.json();
+        const msg = result.message || result.error || JSON.stringify(result);
+        showMessage(msg, !!result.error);
+        alert(msg);
+      });
+
+      document.getElementById("checkBalanceBtn")?.addEventListener("click", async function () {
+        const accountNumber = document.getElementById("accountNumber").value;
+
+        if (!accountNumber) {
+          const msg = "Please enter Account Number to check balance.";
+          showMessage(msg, true);
+          alert(msg);
+          return;
+        }
+
+        const response = await fetch(`${BASE_URL}/balance?account_number=${encodeURIComponent(accountNumber)}`);
+        const result = await response.json();
+
+        const msg = result.balance !== undefined
+          ? `Balance: ${result.balance}`
+          : result.message || result.error || JSON.stringify(result);
+
+        showMessage(msg, result.balance === undefined);
+        alert(msg);
+      });
+    });
+  </script>
+
+</body>
+</html>

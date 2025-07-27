@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Register - ChronoBank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="flip-container flipped" id="flip-box"> <!-- Starts on Register side -->
+        <div class="flip-inner">
+            <!-- Register Side -->
+            <div class="form-container signup-container">
+                <div class="welcome-side">
+                    <h2>HELLO<br>THERE!</h2>
+                    <p>Let's get you signed up!</p>
+                </div>
+                <div class="form-side">
+                    <h2>Sign Up</h2>
+                    <form action="{{ url_for('register') }}" method="post">
+                        <div class="input-group">
+                            <input type="text" name="username" required pattern="^[a-zA-Z0-9_!@#$%^&*()+=-]{5,20}$" title="Username should be 5-20 characters long, and only contain letters, numbers, underscores, and special characters (!@#$%^&*()+=-).">
+                            <label>Username</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="email" required title="Please enter a valid email address.">
+                            <label>Email</label>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()+=-])[A-Za-z\d!@#$%^&*()+=-]{6,}$" title="Password must be at least 6 characters long, and include at least one letter, one number, and one special character (!@#$%^&*()+=-).">
+                            <label>Password</label>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <button class="btn" type="submit">Sign Up</button>
+                    </form>
+                    <p class="switch-text">Already have an account? <a href="#" onclick="flipCard()">Login</a></p>
+                </div>
+            </div>
+
+            <!-- Login Side -->
+            <div class="form-container login-container">
+                <div class="form-side">
+                    <h2>Login</h2>
+                    <form action="{{ url_for('login') }}" method="post">
+                        <div class="input-group">
+                            <input type="text" name="username" required pattern="^[a-zA-Z0-9_!@#$%^&*()+=-]{5,20}$" title="Username should be 5-20 characters long, and only contain letters, numbers, underscores, and special characters (!@#$%^&*()+=-).">
+                            <label>Username</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()+=-])[A-Za-z\d!@#$%^&*()+=-]{6,}$" title="Password must be at least 6 characters long, and include at least one letter, one number, and one special character (!@#$%^&*()+=-).">
+                            <label>Password</label>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <button class="btn" type="submit">Login</button>
+                    </form>
+                    <p class="switch-text">Don't have an account? <a href="#" onclick="flipCard()">Sign Up</a></p>
+                </div>
+                <div class="welcome-side">
+                    <h2>WELCOME<br>BACK!</h2>
+                    <p>Glad to see you again!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function flipCard() {
+            document.getElementById('flip-box').classList.toggle('flipped');
+        }
+    </script>
+</body>
+</html>

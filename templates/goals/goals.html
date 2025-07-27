@@ -1,0 +1,37 @@
+{% extends "goal_base.html" %}
+
+{% block content %}
+<div class="card">
+  <h2>Your Time Goals</h2>
+
+  <ul>
+    {% for goal in goals %}
+      <li>
+        <strong>{{ goal.title }}</strong> — Saved: {{ goal.saved_hours }} hrs
+        <a href="{{ url_for('goal_bp.edit_goal', goal_id=goal.id) }}" class="action-link edit-link">Edit</a>
+
+        <form action="{{ url_for('goal_bp.delete_goal', goal_id=goal.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this goal?');">
+          <button type="submit" class="action-link delete-link">Delete</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p><strong>Total Balance:</strong> {{ balance }} hrs</p>  <!-- Updated line -->
+
+  <br><br>
+  <a href="{{ url_for('goal_bp.withdraw_goal_hours') }}" class="button-link">Withdraw Time</a>
+  <a href="/create_goal" class="button-link">Create Goal</a>
+  <a href="/logout" class="button-link">Logout</a>
+
+  <br><br>
+
+  <form method="POST" action="/undo" style="display:inline;">
+    <button type="submit" class="button-link">Undo</button>
+  </form>
+
+  <form method="POST" action="/redo" style="display:inline;">
+    <button type="submit" class="button-link">Redo</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transactions</title>
+    <link rel="stylesheet" href="/static/transaction.css">
+</head>
+<body>
+    <h2>Transaction History for User ID: {{ user_id }}</h2>
+
+    {% if transactions %}
+        <table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Sender Account</th>
+            <th>Receiver Username</th>
+            <th>Amount</th>
+            <th>Transaction Type</th>
+            <th>Tax</th>
+            <th>Bonus</th>
+            <th>Timestamp</th>
+            <th>Block Hash</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for txn in transactions %}
+        <tr>
+            <td>{{ txn.id }}</td>
+            <td>{{ txn.sender_account_number }}</td>
+            <td>{{ txn.receiver_username }}</td>
+            <td>{{ txn.time_amount }}</td>
+            <td>{{ txn.transaction_type }}</td>
+            <td>{{ txn.tax }}</td>
+            <td>{{ txn.bonus }}</td>
+            <td>{{ txn.timestamp }}</td>
+            <td>{{ txn.txn_hash }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    {% else %}
+        <p>No transactions found.</p>
+    {% endif %}
+
+    <br>
+    <div class="back-to-dashboard">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

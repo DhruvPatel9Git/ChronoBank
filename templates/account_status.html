@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Status</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='account_status.css') }}">
+  <style>
+    .back-to-dashboard {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>
+      <span>Check</span>
+      <span>Account</span>
+      <span>Status</span>
+    </h1>
+
+    <div id="result-card" class="status-card" style="display: none;">
+      <div class="image-box"></div> <!-- Removed <img>, now background image via CSS -->
+      <div class="content" id="card-content">
+        <!-- This will be filled dynamically -->
+      </div>
+    </div>
+
+    <div class="input-group">
+      <input type="number" id="account_number" placeholder="Enter Account Number">
+      <button id="check-status-btn" class="btn-hover"><span>Check Status</span></button> <!-- Added an id for the button -->
+    </div>
+
+  </div>
+  <div class="back-to-dashboard">
+    <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+</div>
+
+  <script>
+    // Wait until the page is fully loaded
+    window.addEventListener('DOMContentLoaded', function() {
+      console.log("Page Loaded"); // Debugging line
+      const checkStatusButton = document.getElementById('check-status-btn');
+      checkStatusButton.addEventListener('click', function() {
+        console.log("Button Clicked"); // Debugging line
+        checkStatus();
+      });
+    });
+
+    async function checkStatus() {
+      const accountNumber = document.getElementById("account_number").value;
+      console.log("Checking Status for Account Number:", accountNumber); // Debugging line
+      const card = document.getElementById("result-card");
+      const cardContent = document.getElementById("card-content");
+
+      // Remove previous status classes
+      card.classList.remove("status-active", "status-overdrawn", "status-frozen", "status-invalid");
+      card.style.display = "none";
+
+      const response = await fetch("/get_account_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ account_number: accountNumber })
+      });
+
+      const data = await response.json();
+      console.log(data); // Debugging line
+
+      if (response.ok) {
+        const status = data.status.toLowerCase();
+        if (status.includes("active")) {
+          card.classList.add("status-active");
+        } else if (status.includes("overdrawn")) {
+          card.classList.add("status-overdrawn");
+        } else if (status.includes("frozen")) {
+          card.classList.add("status-frozen");
+        }
+
+        cardContent.innerHTML = `
+          <h2>Account Number: ${data.account_number}</h2>
+          <p>Status: ${data.status}</p>
+          <p>Balance: ${data.balance} hrs</p>
+        `;
+      } else {
+        card.classList.add("status-invalid");
+        cardContent.innerHTML = `<h2>Invalid Account</h2><p style="color: #ffdcdc;">${data.error}</p>`;
+      }
+
+      card.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

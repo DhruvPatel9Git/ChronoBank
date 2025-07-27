@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Register - ChronoBank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="flip-container" id="flip-box">
+        <div class="flip-inner">
+            <!-- Login Side -->
+            <div class="form-container login-container">
+                <div class="form-side">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <input type="text" id="username" name="username" required>
+                            <label>Username</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="password" name="password" required>
+                            <label>Password</label>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                    <p class="switch-text">Don't have an account? <a href="#" onclick="flipCard()">Sign Up</a></p>
+                </div>
+                <div class="welcome-side">
+                    <h2>WELCOME<br>BACK!</h2>
+                    <p>Glad to see you again!</p>
+                </div>
+            </div>
+
+            <!-- Register Side -->
+            <div class="form-container signup-container">
+                <div class="welcome-side">
+                    <h2>HELLO<br>THERE!</h2>
+                    <p>Let's get you signed up!</p>
+                </div>
+                <div class="form-side">
+                    <h2>Sign Up</h2>
+                    <form action="{{ url_for('register') }}" method="post">
+                        <div class="input-group">
+                            <input type="text" name="username" required>
+                            <label>Username</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="email" required>
+                            <label>Email</label>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" name="password" required>
+                            <label>Password</label>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <button class="btn" type="submit">Sign Up</button>
+                    </form>
+                    <p class="switch-text">Already have an account? <a href="#" onclick="flipCard()">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Flip card function to switch between login and sign up forms
+        function flipCard() {
+            document.getElementById('flip-box').classList.toggle('flipped');
+        }
+
+        // Handle login form submission via fetch API
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the form from submitting normally
+
+            // Get form data
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Send the data using fetch API with JSON content type
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Set content type to JSON
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Handle error (invalid credentials)
+                    alert(data.error);
+                } else {
+                    // Handle success (user is logged in)
+                    alert('Logged in successfully!');
+                    window.location.href = '/';  // Redirect to home or another page
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong!');
+            });
+        });
+    </script>
+</body>
+</html>

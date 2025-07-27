@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - ChronoBank</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    
+    <div class="dashboard-container">
+      
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-clock"></i>
+          <h2>ChronoBank</h2>
+        </div>
+        <div class="sidebar-menu">
+          <h3>Main</h3>
+          <ul>
+            <li>
+              <a href="#" class="active"
+                ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+              >
+            </li>
+            
+            <li>
+              <a href="{{ url_for('account_status_page') }}"
+                ><i class="fas fa-exchange-alt"></i> Account Status</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('transactions.view_transactions') }}"
+                ><i class="fas fa-history"></i> History</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('customize_account_bp.customize_account') }}"
+                ><i class="fas fa-piggy-bank"></i> Customize Account</a>
+            </li>
+            <li>
+              <a href="{{ url_for('loan.dashboard') }}"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-menu">
+          <h3>Account</h3>
+          <ul>
+            <li>
+              <a href="#"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            
+            <li>
+              <a href="{{ url_for('contact') }}"><i class="fas fa-question-circle"></i> Help</a>
+            </li>
+            <li>
+              <a href="{{ url_for('logout') }}"
+                ><i class="fas fa-sign-out-alt"></i> Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="dashboard-header">
+          <div class="dashboard-title">
+            <h1>Dashboard</h1>
+            <p>Welcome back, <strong>{{ username }}</strong></p>
+          </div>
+          
+          <div class="user-menu">
+            
+            <div class="user-profile">
+              <div class="user-avatar">{{ username[0].upper() }}</div>
+              <div class="user-info">
+                <h4>{{ username }}</h4>
+                {% if is_premium %}
+                <p class="premium-label">Premium Account</p>
+                {% endif %}
+               
+              </div>
+                  <a href="{{ url_for('index') }} "class="btn btn-outline">Home</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Overview Cards -->
+        <div class="dashboard-cards">
+          <!-- Time Balance -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>Time Balance</h3>
+                <p>Available hours</p>
+              </div>
+              <div class="card-icon primary">
+                <i class="fas fa-clock"></i>
+              </div>
+            </div>
+            <div class="card-value">{{ total_balance }} hrs</div>
+            <div class="card-change {% if total_balance > 0 %}positive{% else %}negative{% endif %}">
+              <i class="fas fa-arrow-{{ 'up' if total_balance > 0 else 'down' }}"></i>
+              <span>{{ total_balance }} hrs this week</span>
+            </div>
+          </div>
+
+          <!-- Interest Rate -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>Interest Rate</h3>
+                <p>Applicable on your balance</p>
+              </div>
+              <div class="card-icon secondary">
+                <i class="fas fa-percentage"></i>
+              </div>
+            </div>
+            <div class="card-value">{{ interest_rate }}%</div>
+            <div class="card-note">
+              <i class="fas fa-info-circle"></i> Compounded weekly
+            </div>
+          </div>
+
+          <!-- Account Status -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>Account Status</h3>
+                <p>Your current account state</p>
+              </div>
+              <div class="card-icon warning">
+                <i class="fas fa-id-badge"></i>
+              </div>
+            </div>
+            <div class="card-value">
+              <span class="status-badge {{ account_status|lower }}"
+                >{{ account_status }}</span
+              >
+            </div>
+            <div class="card-note">
+              <i class="fas fa-shield-alt"></i> Contact support if status is
+              unexpected
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Recent Transactions</h3>
+              <p>Your time transfers from the past 30 days</p>
+            </div>
+          </div>
+          <div class="transactions-list">
+            {% for txn in transactions %}
+            <div
+              class="transaction-item"
+              data-type="{{ 'received' if txn.receiver_id == user_id else 'sent' }}"
+            >
+              <div
+                class="transaction-icon {{ 'received' if txn.receiver_id == user_id else 'sent' }}"
+              >
+                <i
+                  class="fas fa-arrow-{{ 'down' if txn.receiver_id == user_id else 'up' }}"
+                ></i>
+              </div>
+              <div class="transaction-details">
+                <h4>
+                  {{ 'From' if txn.receiver_id == user_id else 'To' }} User {{
+                  txn.sender_id if txn.receiver_id == user_id else
+                  txn.receiver_id }}
+                </h4>
+                <p>{{ txn.transaction_type }}</p>
+              </div>
+              <div
+                class="transaction-amount {{ 'received' if txn.receiver_id == user_id else 'sent' }}"
+              >
+                {{ '+' if txn.receiver_id == user_id else '-' }}{{ txn.amount }}
+                hrs
+              </div>
+              <div class="transaction-date">
+                {{ txn.timestamp.strftime('%b %d, %Y') }}
+              </div>
+            </div>
+            {% else %}
+            <p style="padding: 1rem">No recent transactions found.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Transfer Time Form -->
+        
+      </main>
+    </div>
+
+    
+  </body>
+</html>

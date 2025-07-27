@@ -1,0 +1,299 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+/* Global Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to right, #e9fccf, #d6fce9);
+    color: #000;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Headings */
+h1, h2, h3, .typing-title {
+    color: #075224;
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+/* Container */
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 30px 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Input Field */
+input {
+    width: 80%;
+    padding: 12px;
+    margin: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #000;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Buttons */
+.buttons button,
+.btn-hover {
+    background: #075224;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 15px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.buttons button:hover,
+.btn-hover:hover {
+    background: #279257;
+    transform: scale(1.05);
+}
+
+/* Hover Button Effect */
+.btn-hover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #047f56;
+    transform: translateX(-100%);
+    transition: 0.3s ease;
+    z-index: 0;
+}
+
+.btn-hover:hover::before {
+    transform: translateX(0);
+}
+
+.btn-hover span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Button Color Variants */
+.btn-hover.red {
+    border-color: #ff4d4d;
+}
+.btn-hover.red::before {
+    background-color: #ff4d4d;
+}
+.btn-hover.green {
+    border-color: #00cc66;
+}
+.btn-hover.green::before {
+    background-color: #00cc66;
+}
+
+
+
+@keyframes showUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Status Card */
+.status-card {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #f4fdf7;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Box */
+.status-card .image-box {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.status-card .image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.4s ease-in-out;
+    filter: none; /* Keeps image in full color */
+}
+
+/* Image Hover Effect */
+.status-card:hover .image-box img {
+    filter: brightness(0.85) blur(2px);
+    transform: scale(1.03);
+}
+
+/* Card Overlay Content */
+.status-card .content {
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.status-card:hover .content {
+    opacity: 1;
+}
+
+/* Account Info Text */
+.status-card .content h2 {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: #ffffff;
+}
+
+.status-card .content p {
+    margin: 6px 0;
+    font-weight: 500;
+    font-size: 1.1em;
+    color: #ffffff;
+}
+
+/* Remove Background Image on Hover (fix flicker) */
+.status-card.status-active:hover,
+.status-card.status-overdrawn:hover,
+.status-card.status-frozen:hover {
+    background-image: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+footer {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #075224;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+}
+/* Background images on hover for each status */
+.status-card .image-box {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.4s ease-in-out;
+  }
+  
+ /* --- IMAGE BACKGROUND SETUP --- */
+.status-card .image-box {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  /* --- STATUS BACKGROUND IMAGES --- */
+  .status-card.status-active .image-box {
+    background-image: url('/static/Active.png'); /* active image */
+  }
+  
+  .status-card.status-overdrawn .image-box {
+    background-image: url('/static/overdrawn.png'); /* overdrawn image */
+  }
+  
+  .status-card.status-frozen .image-box {
+    background-image: url('/static/Frozen.png'); /* frozen image */
+  }
+  /* --- INVALID USER BACKGROUND IMAGE --- */
+.status-card.status-invalid .image-box {
+    background-image: url('/static/Nouser.png'); /* Add this image to your /static folder */
+}
+
+/* Optional: Different overlay for error status */
+.status-card.status-invalid .content {
+    background: rgba(255, 0, 0, 0.3); /* reddish overlay */
+    backdrop-filter: blur(2px);
+}
+
+/* Optional: Text color tweak */
+.status-card.status-invalid .content h2,
+.status-card.status-invalid .content p {
+    color: #f0efef;
+}
+
+  
+  
+  /* --- TEXT OVERLAY INSIDE IMAGE --- */
+  .status-card .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* semi-transparent overlay */
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    padding: 20px;
+  }
+  
+  /* --- FADE IN ON HOVER --- */
+  .status-card:hover .content {
+    opacity: 1;
+  }
+  
+  /* --- TEXT STYLING --- */
+  .status-card .content h2,
+  .status-card .content p {
+    color: #ffffff;
+    margin: 10px 0;
+    font-size: 1.2em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* --- OPTIONAL: Slight image dim on hover for contrast --- */
+  .status-card:hover .image-box {
+    filter: brightness(0.85);
+  }
+  

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | ChronoBank</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7e9, #ffffff);
+      color: #1b4332;
+    }
+
+    header {
+      
+      color: rgb(244, 244, 244);
+      text-align: center;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #dcedc8;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: -60px auto 40px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      animation: slideUp 1s ease-out;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #1b5e20;
+      font-size: 2em;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      margin-top: 6px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #a5d6a7;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #2e7d32;
+      box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 14px;
+      font-size: 1em;
+      background: #1b5e20;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+      transform: scale(1.05);
+    }
+
+    .team {
+      margin-top: 60px;
+    }
+
+    .team h3 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 30px;
+      color: #2e7d32;
+    }
+
+    .team-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.card {
+  flex: 0 1 calc(45% - 20px);
+  max-width: 400px;
+}
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 200px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 5px;
+      background: #66bb6a;
+      border-radius: 3px;
+    }
+
+    .card h4 {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #1b4332;
+    }
+
+    .card p {
+      font-size: 0.95em;
+      color: #4f7755;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .team-members {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 2.2em;
+      }
+
+      .container {
+        margin: -40px 20px 40px;
+        padding: 30px;
+      }
+    }
+     header {
+  position: relative;
+  background: url('/static/main.jpeg') center/cover no-repeat;
+  color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* black overlay with 50% opacity */
+  z-index: 0;
+}
+
+header h1,
+header p {
+  position: relative;
+  z-index: 1;
+}
+.back-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    
+}
+.back-button:hover {
+    background-color: #45a049;
+}
+
+  </style>
+</head>
+<body>
+   <a href="{{ url_for('index') }} "class="back-button">Home</a></div>
+  <div class="container">
+    
+    <section class="hero">
+ <header>
+    <h1>Contact ChronoBank</h1>
+    <p>Your time. Our priority.</p>
+ </header>
+ </section>
+    <h2>Let’s Connect</h2>
+    <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Your Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Your Message</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="team">
+      <h3>Our Creative Team</h3>
+      <div class="team-members">
+        <div class="card">
+          <h4>Preksha Joshi</h4>
+          <p><i class="fas fa-envelope">&#9993; prekshajoshi44@gmail.com </p></i>
+        </div>
+        <div class="card">
+          <h4>Tisha Jain</h4>
+          <p><i class="fas fa-envelope">&#9993; jaintisha880@gmail.com </p></i>
+        </div>
+        <div class="card">
+          <h4>Dhruv Patel</h4>
+           <p><i class="fas fa-envelope">&#9993; dhruvp0908@gmail.com </p></i>
+        </div>
+        <div class="card">
+          <h4>Kaival Shah</h4>
+           <p><i class="fas fa-envelope">&#9993; shahkaival01@gmail.com </p></i> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

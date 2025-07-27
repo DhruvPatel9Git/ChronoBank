@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - ChronoBank</title>
+    <link rel="stylesheet" href="/static/customize.css">
+    <style>
+        .back-to-dashboard {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body class="dashboard-page">
+
+    <header class="dashboard-header">
+        <h1>Customize Your Account</h1>
+        <p id="welcome-text">Welcome, <strong>{{ session['username'] }}</strong></p>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="account-details">
+            <h2>Account Summary</h2>
+            <p><strong>Balance:</strong> {{ account.balance }} hrs</p>
+            <p><strong>Interest Rate:</strong> {{ account.interest_rate }}%</p>
+            <p><strong>Transaction Limit:</strong> {{ account.transaction_limit }}</p>
+        </div>
+
+        {% if is_premium %}
+        <div class="customize-section">
+            <h3>Customize Account <span class="premium-tag">(Premium)</span></h3>
+            <label for="interest_rate">Interest Rate:</label>
+            <input type="number" id="interest_rate" value="{{ account.interest_rate }}">
+
+            <label for="transaction_limit">Transaction Limit:</label>
+            <input type="number" id="transaction_limit" value="{{ account.transaction_limit }}">
+
+            <button onclick="updatePreferences()">
+                Update Preferences <span class="arrow">➜</span>
+            </button>
+        </div>
+        {% else %}
+        <div class="non-premium-warning">
+            <p>⚠️ Only premium users can customize preferences.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div class="back-to-dashboard">
+        <a href="/dashboard" class="back-button">← Back to Dashboard</a>
+    </div>
+
+    <footer class="dashboard-footer">
+        &copy; 2025 ChronoBank – All rights reserved.
+    </footer>
+
+    <script>
+        function updatePreferences() {
+            const interestRate = document.getElementById('interest_rate').value;
+            const transactionLimit = document.getElementById('transaction_limit').value;
+
+            // Validate inputs
+            if (interestRate <= 0 || isNaN(interestRate)) {
+                alert("Please enter a valid interest rate.");
+                return;
+            }
+
+            if (transactionLimit <= 0 || isNaN(transactionLimit)) {
+                alert("Please enter a valid transaction limit.");
+                return;
+            }
+
+            fetch('/update-preferences', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    user_id: "{{ account.user_id }}",
+                    interest_rate: interestRate,
+                    transaction_limit: transactionLimit
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message || data.error);
+                if (data.message) {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                alert('An error occurred while updating preferences. Please try again later.');
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const textElement = document.getElementById("welcome-text");
+            const plainText = textElement.innerText;
+            textElement.innerHTML = "";
+
+            let i = 0;
+            function typeWriter() {
+                if (i < plainText.length) {
+                    textElement.innerHTML += plainText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 75);
+                }
+            }
+
+            typeWriter();
+        });
+    </script>
+</body>
+</html>

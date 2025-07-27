@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #c8f7c5, #dfffe2);
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+  }
+  
+  .form-container {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .form-side {
+    width: 60%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+  }
+  
+  .welcome-side {
+    width: 40%;
+    padding: 40px;
+    background-color: #5fcf80;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .welcome-side h2 {
+    font-size: 26px;
+    line-height: 1.3;
+    margin-bottom: 15px;
+  }
+  
+  .welcome-side p {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .input-group {
+    position: relative;
+    margin-bottom: 25px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px 35px 12px 10px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  .input-group label {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    font-size: 14px;
+    color: #666;
+    transition: 0.3s;
+    pointer-events: none;
+  }
+  
+  .input-group input:focus + label,
+  .input-group input:valid + label {
+    top: -10px;
+    font-size: 12px;
+    color: #5fcf80;
+  }
+  
+  .input-group i {
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    color: #aaa;
+  }
+  
+  .btn {
+    padding: 12px;
+    border: none;
+    background: #5fcf80;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn:hover {
+    background: #45b96c;
+  }
+  
+  .switch-text {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .switch-text a {
+    color: #5fcf80;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .switch-text a:hover {
+    text-decoration: underline;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .form-container {
+      flex-direction: column;
+    }
+  
+    .form-side,
+    .welcome-side {
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+    }
+  
+    .welcome-side {
+      border-top: 1px solid #eee;
+    }
+  }
+/* Flip Container */
+.flip-container {
+    perspective: 1200px;
+    width: 100%;
+    max-width: 600px;
+    height: 450px;
+    position: relative;
+    margin: auto;
+}
+
+/* Inner Flip */
+.flip-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.8s ease;
+    transform-style: preserve-3d;
+}
+
+/* When flipped */
+.flip-container.flipped .flip-inner {
+    transform: rotateY(180deg);
+}
+
+/* Front and Back (login/register) */
+.form-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    transition: all 0.5s ease-in-out;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.login-container {
+    z-index: 2;
+}
+
+.signup-container {
+    transform: rotateY(180deg);
+}
+  

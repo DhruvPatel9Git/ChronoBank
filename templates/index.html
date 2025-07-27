@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoBank - Time-Based Banking System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <i class="fas fa-clock"></i>
+                <h1>ChronoBank</h1>
+            </div>
+            <div class="navbar-links">
+                <a href="{{ url_for('index') }} "class="active">Home</a>
+                <a href="{{ url_for('about') }}" >About</a>
+                <a href="#features">Services</a>
+                <a href="{{ url_for('contact') }}" >Contact</a>
+                {% if session['user_id'] %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                {% endif %}
+            </div>
+            
+            <div class="navbar-auth">
+                {% if session['user_id'] %}
+                    <span class="user-name">Welcome, {{ session['username'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
+                {% endif %}
+            </div>
+            <div class="navbar-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to the Future of Banking</h1>
+                <p>In NeoHorizon, time is the new currency. Earn, spend, and transfer time with our secure and efficient ChronoBank system.</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('create_account_bp.create_account') }}" class="btn btn-primary btn-large">
+                        Open an Account
+                    </a>
+                    
+                    <a href="#features" class="btn btn-outline btn-large">Learn More</a>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title">Our Services</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <a href="{% if session['user_id'] %}{{ url_for('transactions.record_transaction') }}{% else %}#{% endif %}" 
+                        class="time-transfer-link"
+                        {% if not session['user_id'] %}onclick="alert('Please log in to transfer time.')" {% endif %}>
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Time Transfers</h3>
+                        <p>Transfer time to other citizens instantly and securely.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{% if session['user_id'] %}{{ url_for('goal_bp.goals') }}{% else %}#{% endif %}" 
+                       class="time-goals-link"
+                       {% if not session['user_id'] %}onclick="alert('Please log in to manage your goals.')" {% endif %}>
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>ChronoGoals</h3>
+                        <p>Manage and track your personal time goals effortlessly.</p>
+                    </a>
+                </div>
+                
+                <div class="feature-card">
+                    <a href="{% if session['user_id'] %}{{ url_for('banking_bp.banking_page') }}{% else %}#{% endif %}"
+                    class="time-transfer-link"
+                        {% if not session['user_id'] %}onclick="alert('Please log in to use banking.')" {% endif %}> 
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Banking</h3>
+                    <p>Advanced security measures to protect your time assets.</p>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <a href="{% if session['user_id'] %}{{ url_for('legacy.money_time_transactions_page') }}{% else %}#{% endif %}"
+                    class="time-transfer-link"
+                        {% if not session['user_id'] %}onclick="alert('Please log in to use banking.')" {% endif %}> 
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Money-Time Transactions</h3>
+                    <p>Choose from various account types to suit your needs.</p>
+                    
+                      </a>                      
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2 class="section-title">How ChronoBank Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Your Account</h3>
+                    <p>Sign up for a ChronoBank account and verify your identity.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Earn Time</h3>
+                    <p>Work, provide services, or sell goods to earn time currency.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Manage Your Time</h3>
+                    <p>Transfer, invest, or save your time using our secure platform.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Spend Time</h3>
+                    <p>Use your time currency for purchases, services, or investments.</p>
+                </div>
+            </div>
+        </section>
+
+       
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Ready to Join the Time Economy?</h2>
+                <p>Open your ChronoBank account today and start managing your time assets.</p>
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-large">Get Started</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-clock"></i>
+                    <h2>ChronoBank</h2>
+                    <p>The future of time-based banking</p>
+                </div>
+                
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ChronoBank. All rights reserved. NeoHorizon City.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    // Only connect to SSE if the user is logged in
+  
+    const eventSource = new EventSource("/monitor/events");
+
+
+    eventSource.onmessage = function(event) {
+        const message = event.data;
+        showNotification(message);
+    };
+
+    eventSource.onerror = function(error) {
+        console.error("SSE error:", error);
+        eventSource.close();  // Optional: Close if persistent errors
+    };
+
+    function showNotification(message) {
+        // Create a floating notification element
+        const notification = document.createElement("div");
+        notification.className = "sse-notification";
+        notification.innerHTML = `<i class="fas fa-bell"></i> ${message}`;
+        document.body.appendChild(notification);
+
+        // Automatically fade out after 8 seconds
+        setTimeout(() => {
+            notification.style.opacity = "0";
+            setTimeout(() => notification.remove(), 1000);
+        }, 8000);
+    }
+   
+</script>
+
+<style>
+    .sse-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #323232;
+        color: #fff;
+        padding: 16px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        animation: slideIn 0.4s ease-out;
+        transition: opacity 1s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+</body>
+</html>

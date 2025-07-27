@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Legacy System Adapter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='money_time_transactions.css') }}">
+    <style>
+        .bg-img {
+            background: url("/static/download.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-img">
+   
+    <div class="container">
+        <h2>Legacy Banking Adapter (Money to Time)</h2>
+        <div class="navbar">
+            <a href="{{ url_for('index') }} "class="active">Home</a>
+        </div>
+        <div class="form-group">
+            <label for="account_number">Account Number:</label>
+            <input type="text" id="account_number" name="account_number" class="form-input"><br><br>
+
+            <label for="money_amount">Money Amount:</label>
+            <input type="number" id="money_amount" class="form-input"><br><br>
+
+            <button onclick="deposit()" class="btn">Deposit (via Adapter)</button>
+            <button onclick="withdraw()" class="btn">Withdraw (via Adapter)</button>
+            <button class="btn" onclick="fetchTransactions()">Show Transactions</button>
+        </div>
+
+        <p id="response"></p>
+
+        <div class="history" id="historySection" style="display: none;">
+            <h2>Transaction History</h2>
+            <ul id="transactionList"></ul>
+        </div>
+    </div>
+    
+    <script>
+        function deposit() {
+            const account_number = document.getElementById("account_number").value.trim();
+            const money_amount = parseInt(document.getElementById("money_amount").value);
+
+            if (!account_number || isNaN(money_amount) || money_amount <= 0) {
+                alert("Please enter a valid account number and money amount.");
+                return;
+            }
+
+            fetch("/legacy_deposit", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ account_number, money_amount })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("response").innerText =
+                    data.error ? `Error: ${data.error}` : `${data.message} (Time Equivalent: ${data.time_equivalent})`;
+            })
+            .catch(err => alert("An error occurred while processing the deposit."));
+        }
+
+        function withdraw() {
+            const account_number = document.getElementById("account_number").value.trim();
+            const money_amount = parseInt(document.getElementById("money_amount").value);
+
+            if (!account_number || isNaN(money_amount) || money_amount <= 0) {
+                alert("Please enter a valid account number and money amount.");
+                return;
+            }
+
+            fetch("/legacy_withdraw", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ account_number, money_amount })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("response").innerText =
+                    data.error ? `Error: ${data.error}` : `${data.message} (Time Equivalent: ${data.time_equivalent})`;
+            })
+            .catch(err => alert("An error occurred while processing the withdrawal."));
+        }
+
+        async function fetchTransactions() {
+            try {
+                const response = await fetch(`/api/transactions`);
+                const transactions = await response.json();
+                const list = document.getElementById("transactionList");
+                list.innerHTML = "";
+
+                if (!Array.isArray(transactions) || transactions.length === 0) {
+                    list.innerHTML = "<li>No transactions found.</li>";
+                } else {
+                    transactions.forEach(tx => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `<strong>${tx.type}</strong> - $${tx.amount} (${tx.time_equivalent}) - ${new Date(tx.timestamp).toLocaleString()}`;
+                        list.appendChild(li);
+                    });
+                }
+
+                document.getElementById("historySection").style.display = "block";
+            } catch (err) {
+                alert("Error fetching transactions.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f4f4f4;
+}
+
+header {
+    background: #333;
+    color: white;
+    padding: 10px;
+}
+
+.flash {
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.flash.success { background-color: #c8e6c9; }
+.flash.danger { background-color: #ffcdd2; }
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #e9f5ec;
+    color: #2d6a4f;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f4fdf9;
+}
+.header {
+    background-color: #2d6a4f; /* Green shade */
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-buttons a.btn {
+    background-color: #40916c;
+    color: white;
+    padding: 10px 16px;
+    margin-left: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.nav-buttons a.btn:hover {
+    background-color: #1b4332;
+}
+
+.nav-buttons i {
+    margin-right: 6px;
+}
+.button {
+    background-color: #2e7d64;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.button i {
+    margin-right: 6px;
+}
+
+.button:hover {
+    background-color: #256d57;
+}
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.user-table th {
+    background-color: #f5f5f5;
+}
+
+.button.small {
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+.button.delete {
+    background-color: #c0392b;
+}
+
+.button.delete:hover {
+    background-color: #a93226;
+}
+.top-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+
+}
+
+.button {
+    background-color: #2e8b57;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #256d46;
+}
+

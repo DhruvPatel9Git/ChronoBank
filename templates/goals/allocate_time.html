@@ -1,0 +1,13 @@
+{% extends "goal_base.html" %}
+{% block content %}
+<h2>Create New Goal</h2>
+<form method="POST" action="/create_goal">
+  <label>Goal Title</label>
+  <input type="text" name="title" required>
+
+  <label>Initial Hours to Allocate</label>
+  <input type="number" name="hours" step="0.1" required>
+
+  <button type="submit">Create Goal</button>
+</form>
+{% endblock %}

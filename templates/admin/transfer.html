@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Transaction History{% endblock %}
+
+{% block content %}
+<h2>Transaction History</h2>
+<div class="top-right">
+    <a href="{{ url_for('admin_home.index') }}" class="button">🏠 Home</a>
+</div>
+
+{% if transactions %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Amount</th>
+                <th>Tax</th>
+                <th>Bonus</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for txn in transactions %}
+            <tr>
+                <td>{{ txn.id }}</td>
+                <td>{{ txn.sender.username }}</td>
+                <td>{{ txn.receiver.username }}</td>
+                <td>{{ txn.time_amount }}</td>
+                <td>{{ txn.tax }}</td>
+                <td>{{ txn.bonus }}</td>
+                <td>{{ txn.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('admin_bp.transfer', page=pagination.prev_num) }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ pagination.page }} of {{ pagination.pages }}</span>
+
+        {% if pagination.has_next %}
+            <a href="{{ url_for('admin_bp.transfer', page=pagination.next_num) }}">Next</a>
+        {% endif %}
+    </div>
+{% else %}
+    <p>No transactions found.</p>
+{% endif %}
+{% endblock %}

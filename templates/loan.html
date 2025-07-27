@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loan Application</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='loan.css') }}">
+  
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">
+    <span class="typewriter-text"> 
+
+    </span>
+  </h2>
+
+  <div class="col-12">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'loan' %}active{% endif %}" href="{{ url_for('loan.dashboard') }}?active_tab=loan">Apply Loan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'alerts' %}active{% endif %}" href="{{ url_for('loan.dashboard') }}?active_tab=alerts">Alerts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'history' %}active{% endif %}" href="{{ url_for('loan.dashboard') }}?active_tab=history">Loan History</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'repayments' %}active{% endif %}" href="{{ url_for('repayment.repay') }}?active_tab=history">Repayment</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="tab-content mt-3">
+    <!-- Loan Application Tab -->
+    <div id="loan" class="tab-pane fade {% if active_tab == 'loan' %}show active{% endif %}">
+      <!-- Check Eligibility Button -->
+      <form method="GET" action="{{ url_for('loan.eligibility') }}">
+        <button type="submit" class="btn btn-secondary mb-3">Check for Eligibility</button>
+      </form>
+
+      <!-- Loan Application Form -->
+      <form method="POST" action="{{ url_for('loan.apply_loan') }}?active_tab=loan">
+        <div class="mb-3">
+          <label for="account_number" class="form-label">Account Number:</label>
+          <input type="text" class="form-control" id="account_number" name="account_number" required>
+        </div>
+        <div class="mb-3">
+          <label for="loan_amount" class="form-label">Loan Amount:</label>
+          <input type="number" class="form-control" id="loan_amount" name="loan_amount" required placeholder="Enter total loan amount">
+        </div>
+        <div class="mb-3">
+          <label for="strategy" class="form-label">Loan Strategy:</label>
+          <select class="form-control" name="strategy" id="strategy">
+            <option value="Installment">Installment (4 Parts)</option>
+            <option value="Fixed">Fixed</option>
+          </select>
+          <div class="form-text text-muted mt-1" id="strategy-hint"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply for Loan</button>
+      </form>
+
+      {% if error %}
+      <div class="alert alert-danger mt-3">{{ error }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Alerts Tab -->
+    <div id="alerts" class="tab-pane fade {% if active_tab == 'alerts' %}show active{% endif %}">
+      <h4>Alerts</h4>
+      {% if warnings %}
+      <ul>
+        {% for warning in warnings %}
+        <li class="text-warning">{{ warning }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No alerts to show.</p>
+      {% endif %}
+    </div>
+
+    <!-- Loan History Tab -->
+    <div id="history" class="tab-pane fade {% if active_tab == 'history' %}show active{% endif %}">
+      <h4>Loan History</h4>
+      {% if history %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Strategy</th>
+            <th>Status</th>
+            <th>Applied At</th>
+            <th>Repayment Due</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for loan in history %}
+          <tr>
+            <td>{{ loan.loan_amount }} hours</td>
+            <td>{{ loan.strategy }}</td>
+            <td>{{ loan.status }}</td>
+            <td>{{ loan.applied_at }}</td>
+            <td>{{ loan.repayment_due if loan.repayment_due else 'N/A' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No loan history found.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="back-to-dashboard">
+    <a href="/dashboard" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Typewriter effect
+    const text = " ChronoLoan - Apply & Manage Time-Based Loans";
+    const speed = 50;
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        document.querySelector(".typewriter-text").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        const element = document.querySelector(".typewriter-text");
+        element.style.borderRight = "none";
+        element.style.animation = "none";
+      }
+    }
+
+    typeWriter();
+
+    // Strategy hint updater
+    const strategySelect = document.getElementById('strategy');
+    const loanAmountInput = document.getElementById('loan_amount');
+    const hintText = document.getElementById('strategy-hint');
+
+    function updateHint() {
+      const selected = strategySelect.value;
+      if (selected === 'Installment') {
+        loanAmountInput.placeholder = "Total loan (split into 4 parts)";
+        hintText.innerText = "Your repayment will be split into 4 equal weekly installments.";
+      } else {
+        loanAmountInput.placeholder = "Enter total fixed loan amount";
+        hintText.innerText = "You will repay the full amount at once by the due date.";
+      }
+    }
+
+    strategySelect.addEventListener('change', updateHint);
+    updateHint();
+  });
+</script>
+
+
+</body>
+</html>

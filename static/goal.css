@@ -1,0 +1,233 @@
+/* Reset and base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: url('/static/background.png') no-repeat center center fixed;
+    background-size: cover;
+    background-blend-mode: overlay;
+    background-color: rgba(202, 237, 203, 0.85); /* Adds white overlay */
+    color: #1b4d3e;
+    padding: 30px;
+}
+
+
+
+/* Headings */
+h1, h2 {
+    color: #146c43;
+    margin-bottom: 20px;
+}
+
+/* Welcome typewriter effect */
+.welcome {
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 24px;
+    width: 0;
+    animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* Button styling with flowing arrow effect */
+button {
+    background-color: #166328;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    margin: 10px 5px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+    overflow: hidden;
+}
+
+button:hover {
+    background-color: #2da5a3;
+}
+
+button::after {
+    content: '➔';
+    position: absolute;
+    right: 20px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+button:hover::after {
+    opacity: 1;
+    transform: translateX(5px);
+}
+.navbar {
+    width: 100%;
+    background: rgba(13, 192, 144, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    text-align: right;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+  }
+  
+  .navbar a {
+    color: #169a65;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 18px;
+    transition: 0.3s;
+  }
+  
+  .navbar a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+  
+/* Links styled as buttons */
+a.button-link {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #28a745;
+    color: rgb(11, 11, 11);
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+a.button-link:hover {
+    background-color: #218838;
+}
+
+/* Flash messages */
+ul {
+    list-style-type: none;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+ul li {
+    padding: 10px;
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input fields */
+input[type="text"], input[type="password"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #28a745;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.card {
+    background: rgba(23, 111, 61, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 30px auto;
+    width: 80%;
+    max-width: 700px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    color: #1b1b1b;
+}
+
+a.button-link, button.button-link {
+    text-decoration: none;
+    background: linear-gradient(135deg, #1fd47f, #24deaf);
+    color: rgb(15, 15, 15);
+    padding: 12px 22px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin: 10px 8px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+a.button-link:hover, button.button-link:hover {
+    background: linear-gradient(135deg, #5dd1b0, #318475);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+a.button-link::after, button.button-link::after {
+    content: '➔';
+    position: absolute;
+    right: 15px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+a.button-link:hover::after, button.button-link:hover::after {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+/* Shared action styles */
+.action-link {
+    background: linear-gradient(120deg, #4caf50, #2e7d32);
+    color: rgb(3, 38, 29);
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  
+  .action-link:hover {
+    background: linear-gradient(120deg, #66bb6a, #388e3c);
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  /* Specific colors for delete */
+  .delete-link {
+    background: linear-gradient(120deg, #e53935, #b71c1c);
+  }
+  
+  .delete-link:hover {
+    background: linear-gradient(120deg, #ef5350, #c62828);
+  }
+  
+  /* Optional edit link tweaks */
+  .edit-link {
+    background: linear-gradient(120deg, #42a5f5, #1565c0);
+  }
+  
+  .edit-link:hover {
+    background: linear-gradient(120deg, #64b5f6, #1976d2);
+  }
+  

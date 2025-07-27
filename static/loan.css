@@ -1,0 +1,182 @@
+/* General body and background */
+body {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(rgba(146, 233, 192, 0.6), rgba(4, 113, 69, 0.6)),
+   url('loan.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fcfcfc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+  .container {
+    backdrop-filter: blur(4px);
+    background-color: rgba(12, 87, 52, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+  }
+  body {
+    animation: zoomBg 20s ease-in-out infinite alternate;
+  }
+  
+  @keyframes zoomBg {
+    from {
+      background-size: 100%;
+    }
+    to {
+      background-size: 105%;
+    }
+  }
+   
+  /* Navigation */
+  .nav-pills .nav-link {
+    color: #1b4d1b;
+    border: 1px solid transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-pills .nav-link.active {
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
+    border-color: #28a745;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+  }
+  
+  .nav-pills .nav-link:hover {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  /* Tab content padding */
+  .tab-content > .tab-pane {
+    padding-top: 20px;
+  }
+  
+  /* Form controls */
+  .form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+  }
+  
+  .btn-secondary {
+    background-color: #1b7747;
+    border-color: #0d5f43;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #168351;
+    transform: scale(1.05);
+  }
+  
+  /* Custom Popup */
+  .custom-popup {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    color: #1b4d1b;
+    padding: 20px;
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    z-index: 1050;
+    box-shadow: 0 0 15px rgba(0, 128, 0, 0.3);
+    display: none;
+    min-width: 300px;
+  }
+  
+  .custom-popup.show {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  .popup-close {
+    float: right;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  /* Remove spinners from number inputs */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .typewriter-text {
+    font-weight: bold;
+    font-size: 1.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    border-right: 2px solid #28a745; 
+    animation: blink-caret 0.75s step-end infinite;
+  }
+  
+  @keyframes blink-caret {
+    from, to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: #28a745;
+    }
+  }
+  .btn {
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+    z-index: 1;
+  }
+  
+  .btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #218838, #043410);
+    z-index: -1;
+    transition: left 0.4s ease-in-out;
+  }
+  
+  .btn:hover::before {
+    left: 0;
+  }
+  
+  .btn:hover {
+    color: rgb(255, 255, 255) !important;
+    transform: scale(1.03);
+  }
+  
